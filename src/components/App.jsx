@@ -1,96 +1,93 @@
-import {  useState, useEffect } from 'react';
+
 
 import ContactForm from './ContactForm/ContactForm'
 import Filter from './Filter/Filter'
 import ContactList from './ContactList/ContactList'
-import { nanoid } from 'nanoid'
+
+
 
 
 
 
 export default function App() {
-  const [contacts, setContacts] = useState([])
-  const [filter, setFilter] = useState('')
-  const [name, setName] = useState('')
-  const [number, setNumber] = useState('')
-  const handleInput = (e) => {
-    e.preventDefault();
-
-    switch (e.target.name) {
-      case 'name':
-        setName(e.target.value)
-        break
-      case 'number':
-        setNumber(e.target.value)
-        break
-      default:
-        return
-    }
-  }
-   const handleChange = (e) => {
-    setFilter(e.target.value);
-   }
-  useEffect(() => {
-    const contactsLS = localStorage.getItem('contacts');
-    const parsedContact = JSON.parse(contactsLS);
-    setContacts(parsedContact || []);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-    const handleButton = (e) => {
-    e.preventDefault();
-    if (name && number) {
-      const isContactExists = contacts.some(
-        (contact) => contact.name.toLowerCase() === name.trim().toLowerCase()
-      );
-
-      if (isContactExists) {
-        alert(`Contact with name "${name}" already exists in the phonebook.`);
-      } else {
-        const newContact = {
-          id: nanoid(), 
-          name: name.trim(),
-          number: number.trim(),
-        };
-        setContacts((prevContacts) => [...prevContacts, newContact]);
-        setName('');
-        setNumber('');
-      }
-    }
-  };
-const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
- const handleDelete = (contactId) => {
-    setContacts((prevContacts) =>
-      prevContacts.filter((contact) => contact.id !== contactId)
-    );
-  };
-
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm name={name}
-          handleInput={handleInput}
-          number={number}
-          handleButton={handleButton}
+        <ContactForm 
         />
 
         <h2>Contacts</h2>
-        <Filter value={filter}
-             onChange={handleChange} /> 
-         <ContactList contacts={getFilteredContacts()} 
-          
-        contactDelete={handleDelete}/> 
+        <Filter /> 
+         <ContactList /> 
       </div>
     )
-  };
+};
+  
+  // const [contacts, setContacts] = useState([])
+//   const [filter, setFilter] = useState('')
+//   const [name, setName] = useState('')
+//   const [number, setNumber] = useState('')
+//   const dispatch = useDispatch()
+//   const handleInput = (e) => {
+//     e.preventDefault();
+
+//     switch (e.target.name) {
+//       case 'name':
+//         dispatch(filter(e.target.value));
+//         break;
+//       case 'number':
+//         dispatch(filter(e.target.value));
+//         break;
+//       default:
+//         return;
+//     }
+//   };
+//    const handleChange = (e) => {
+//     setFilter(e.target.value);
+//    }
+//   useEffect(() => {
+//     const contactsLS = localStorage.getItem('contacts');
+//     const parsedContact = JSON.parse(contactsLS);
+//     setContacts(parsedContact || []);
+//   }, []);
+
+//   useEffect(() => {
+//     localStorage.setItem('contacts', JSON.stringify(contacts));
+//   }, [contacts]);
+
+//     const handleButton = (e) => {
+//     e.preventDefault();
+//     if (name && number) {
+//       const isContactExists = contacts.some(
+//         (contact) => contact.name.toLowerCase() === name.trim().toLowerCase()
+//       );
+
+//       if (isContactExists) {
+//         alert(`Contact with name "${name}" already exists in the phonebook.`);
+//       } else {
+//         const newContact = {
+//           id: nanoid(), 
+//           name: name.trim(),
+//           number: number.trim(),
+//         };
+//         setContacts((prevContacts) => [...prevContacts, newContact]);
+//         setName('');
+//         setNumber('');
+//       }
+//     }
+//   };
+// const getFilteredContacts = () => {
+//     const normalizedFilter = filter.toLowerCase();
+//     return contacts.filter((contact) =>
+//       contact.name.toLowerCase().includes(normalizedFilter)
+//     );
+//   };
+//  const handleDelete = (contactId) => {
+//     setContacts((prevContacts) =>
+//       prevContacts.filter((contact) => contact.id !== contactId)
+//     );
+//   };
+
 
 
 // export class App extends Component{
