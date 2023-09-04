@@ -34,7 +34,7 @@ export default function ContactList() {
             {contact.number}
             <button
               className={styles.button}
-              onClick={() => handleDelete(contacts.id)} 
+              onClick={() => handleDelete(contact.id)}
             >
               Delete
             </button>
